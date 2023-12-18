@@ -1,1 +1,121 @@
-<p>contact works!</p>
+<form
+  [formGroup]="contactForm"
+  (ngSubmit)="($event.preventDefault); submitForm()"
+  class="container p-5 mb-3 col-md-6"
+>
+  <h1 class="text-center">Contact Form</h1>
+  <div class="form-group mb-3">
+    <label class="form-label">Name:</label>
+    <input type="text" class="form-control" formControlName="senderName" />
+
+    <div
+      *ngIf="
+        contactForm.get('senderName')?.invalid &&
+        (contactForm.get('senderName')?.dirty ||
+          contactForm.get('senderName')?.touched)
+      "
+    >
+      <!-- Field Required error message -->
+      <small
+        *ngIf="contactForm.get('senderName')?.hasError('required')"
+        class="text-danger"
+      >
+        Field cannot be left empty
+      </small>
+    </div>
+  </div>
+  <div class="form-group mb-3">
+    <label class="form-label">Email</label>
+    <input type="email" class="form-control" formControlName="senderEmail" />
+
+    <div
+      *ngIf="
+        contactForm.get('senderEmail')?.invalid &&
+        (contactForm.get('senderEmail')?.dirty ||
+          contactForm.get('senderEmail')?.touched)
+      "
+    >
+      <!-- Field Required error message -->
+      <small
+        *ngIf="contactForm.get('senderEmail')?.hasError('required')"
+        class="text-danger"
+      >
+        Field cannot be left empty
+      </small>
+      <!-- Invalid Email Error message -->
+      <small
+        *ngIf="contactForm.get('senderEmail')?.hasError('email')"
+        class="text-danger"
+      >
+        Invalid Email
+      </small>
+    </div>
+  </div>
+  <div class="form-group mb-3">
+    <label class="form-label">Password</label>
+    <input
+      type="password"
+      class="form-control"
+      formControlName="senderPassword"
+    />
+
+    <div
+      *ngIf="
+        contactForm.get('senderPassword')?.invalid &&
+        (contactForm.get('senderPassword')?.dirty ||
+          contactForm.get('senderPassword')?.touched)
+      "
+    >
+      <!-- Field Required error message -->
+      <small
+        *ngIf="contactForm.get('senderPassword')?.hasError('required')"
+        class="text-danger"
+      >
+        Field cannot be left empty
+      </small>
+
+      <!-- Minlength Error message -->
+      <small
+        *ngIf="contactForm.get('senderPassword')?.hasError('minlength')"
+        class="text-danger"
+      >
+        Password must be 6 characters or more.
+      </small>
+    </div>
+  </div>
+  <div class="form-group mb-3">
+    <label class="form-label">Message:</label>
+    <textarea
+      class="form-control"
+      formControlName="senderMessage"
+      rows="3"
+    ></textarea>
+
+    <div
+      *ngIf="
+        contactForm.get('senderMessage')?.invalid &&
+        (contactForm.get('senderMessage')?.dirty ||
+          contactForm.get('senderMessage')?.touched)
+      "
+    >
+      <!-- Field Required error message -->
+      <small
+        *ngIf="contactForm.get('senderMessage')?.hasError('required')"
+        class="text-danger"
+      >
+        Field cannot be left empty
+      </small>
+
+      <!-- Min length Error message -->
+      <small
+        *ngIf="contactForm.get('senderMessage')?.hasError('minlength')"
+        class="text-danger"
+      >
+        Message must contain 10 characters or more.
+      </small>
+    </div>
+  </div>
+  <button [disabled]="contactForm.invalid" class="btn btn-primary">
+    Send Message
+  </button>
+</form>
